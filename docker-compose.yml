@@ -7,7 +7,7 @@ services:
     depends_on:
       - db
     environment:
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
       DB_CONNECTION_STRING: "Host=db;Port=5432;User ID=postgres;Password=postgres;database=postgres"
       ASPNETCORE_URLS: http://+:8000
 
