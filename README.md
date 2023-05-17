@@ -69,7 +69,7 @@
 1. Склонируйте репозиторий
 
 ```
-git clone --recursive https://github.com/mxschardt/layout-app
+git clone --recursive https://github.com/mxschardt/layout-app && cd layout-app
 ```
 
 2. Запустите docker-compose
