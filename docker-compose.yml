@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  server:
+    build: ./server
+    # secrets:
+    #   - db-password
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      DB_CONNECTION_STRING: "Host=db;Port=5432;User ID=postgres;Password=postgres;database=postgres"
+      ASPNETCORE_URLS: http://+:8000
+
+  client:
+    build: ./client
+    environment:
+      PORT: 3000
+    depends_on:
+      - server
+
+  db:
+    image: postgres:15.3-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+  proxy:
+    image: nginx:mainline
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:80
+    depends_on:
+      - server
+      - client
+    restart: always
+
+
+volumes:
+  db:
+    driver: local
